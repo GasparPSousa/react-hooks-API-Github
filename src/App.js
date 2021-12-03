@@ -16,8 +16,13 @@ function App() {
       // carregando os repositórios com dados da minha api github
       setRepositories(data);
 
-   }, []) // A função setRepositories será executada apenas uma vez nesse cenário, já que o segundo argumento é um array vazio, ou seja, não está passando nenhuma dependência para esse effect, não está passando nenhuma comparação. 
+   }, []); // A função setRepositories será executada apenas uma vez nesse cenário, já que o segundo argumento é um array vazio, ou seja, não está passando nenhuma dependência para esse effect, não está passando nenhuma comparação. 
 
+   useEffect(() => {
+     const filtered = repositories.filter(repo => repo.favorite)
+
+     document.title = `Você tem ${filtered.length} favoritos`;
+   }, [repositories]); // Toda vez que o segundo argumento alterar, temos uma atualização da função. (componentDidUpate)
 
    const handleFavorite = id => {
      const newRepositories = repositories.map(repo => {
@@ -25,7 +30,6 @@ function App() {
      })
 
      setRepositories(newRepositories)
-
    }
   return (
     <>
